@@ -1,0 +1,3 @@
+Sebastian Knight
+
+I am using Kali with VMWare, and have it successfully running.
