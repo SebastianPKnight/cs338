@@ -39,4 +39,4 @@ Getting an ip from a hostname. https://linuxhint.com/find-hostname-ip-linux/
 	https://fedingo.com/how-to-get-hostname-domain-name-from-ip-address-in-linux/
 scp. https://www.cyberciti.biz/faq/linux-or-unix-securely-copy-files-across-a-network-computer/
 netcat : https://www.ionos.com/digitalguide/server/tools/netcat/
-map : https://nmap.org/book/man-port-scanning-techniques.html
+nmap : https://nmap.org/book/man-port-scanning-techniques.html
