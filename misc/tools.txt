@@ -1,0 +1,41 @@
+1. what is your computer's IP address for it's current Internet connection
+192.168.177.128, from ifconfig
+
+2. How can you determine the IP address associated with a given host name?
+One option is to use 'curl -v <address starting with hostname>', and you can find the IP near the top of the output.
+An easier way is to use 'ping <hostname>' or host '<hostname>'
+
+3. How can you determine the host name(s) associated with a given IP address?
+host <ip> would work, but sometimes gave odd answers. 
+These answers would still lead to the right cite if you put them into a browser, but sometime to an error page (like google's 'ord38s32-in-f14.1e100.net'
+
+4. How can you copy a file from one computer to another? Or more to the point, if you create a file on the Kali virtual machine and you want to put it someplace where you can save it, like your your account on mantis.mathcs.carleton.edu, how do you go about it from the Kali command-line interface?
+Use scp, specifically 'scp <path to file on Kali> <username>@<ip or hostname>:<path to file>'
+The first argument is the source, the second is the destination for the copy.
+
+5. How can you tell whether there's a process listening on a given port (e.g. port 80 or port 22) on a given host?
+map -p <port number> <hostname>
+If it says the port is "open", then there is a process listening, if it says "closed" there is not. If it says some variation  of "filtered" then it cannot tell.
+
+6. How can you tell which ports have processes listening on them on a given host?
+nmap --open <hostname>
+It will output all the open ports, which have processes listening on them. If you omit '--open' it will also output 'filtered' ports, which could have a process listening on them
+
+7. How can you retrieve and save a given web page (say https://google.com/ or https://carleton.edu/) in a file on your system?
+curl [full url] > [filename]
+You can also just use 
+
+8. How can you view the HTTP headers sent back from a specified web server when you request one of its pages?
+curl -v <url>
+Look for lines starting with '<'
+
+9. How can you view the HTTP headers that your computer sends to the web server when you do the tasks in the previous two questions?
+curl -v 'url'
+Look for lines starting with '>'
+
+resources: 
+What is a hostname? https://www.ibm.com/docs/en/cics-ts/5.3?topic=concepts-host-names
+Getting an ip from a hostname. https://linuxhint.com/find-hostname-ip-linux/
+	https://fedingo.com/how-to-get-hostname-domain-name-from-ip-address-in-linux/
+scp. https://www.cyberciti.biz/faq/linux-or-unix-securely-copy-files-across-a-network-computer/
+netcat : https://www.ionos.com/digitalguide/server/tools/netcat/
