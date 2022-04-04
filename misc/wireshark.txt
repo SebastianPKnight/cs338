@@ -1,0 +1,76 @@
+Sebastian Knight
+
+====== DAYTIME ======
+1. Identify the parts of the TCP 3-way handshake by listing the frame summaries of the relevant frames.
+
+client sends a syn request
+	1   192.168.177.128   132.163.97.1     TCP     [SYN]
+server responds with acknowledgment and it's own syn
+	2   132.163.97.1      192.168.177.128  TCP     [SYN, ACK]
+client responds with acknowledgment
+	3   192.169.177.128   132.163.97.1     TCP     [ACK]
+
+2. What port does the client use for this communication?
+55330, my computer needs a port because the terminal needs to have a place to 'listen' at for the response from the server.
+
+3. What frame contains the actual date and time
+	4   132.163.97.1      192.168.177.128  DAYTIME response
+
+4. What is the full content of the frame(without Ethernet, IP, or TCP headers)? What does each piece represent?
+                  0a 35  39 36 37 32 20 32 32 2d
+30 34 2d 30 33 20 31 38  3a 34 38 3a 35 31 20 35
+30 20 30 20 30 20 34 36  34 2e 36 20 55 54 43 28
+4e 49 53 54 29 20 2a 20  0a
+or
+"
+59672 22-04-03 18:48:51 50 0 0 464.6 UTC(NIST) *
+"
+Where every pair of hex digits represent one character.
+I don't know what the first part "59672" means.
+"22-04-03" is the year-month-day.
+"18:48:51" is the time of day in hour:minute:second.
+I don't know what "50 0 0 464.6" means
+"UTC(NIST)" is the time zone and server
+I don't know what the asterisk's purpose is.
+
+5. What does [SYN] mean?
+"Synchonize"
+It's a request to open communications between the client and server
+
+
+6. What does [ACK] mean?
+"acknowledge"
+This tells the receiving server that the previous message was recieved.
+
+
+7. What does [FIN] mean?
+The sender is ending the communication
+
+
+8. Which entity initiated the closing of the TCP connection? How can you tell?
+Kali, since the sender of the message with the [FIN] tag had Kali's IP number
+
+	5   192.168.177.128   132.163.97.1     TCP   [FIN, ACK]
+
+
+====== HTTP ======
+1. How many TCP connections were opened?
+4
+I saw 4 packets with both [SYN] and [ACK] flags, which tells me that 4 connections were established
+I saw only 3 packets with the [FIN] flag.
+I also saw 1 packet with the [RST] flag.
+I'm not sure, but I think the [RST] packet may not have really established a 'new' connection, but just reset an already existing one, so maybe it could be just 3 connections.
+
+2. Can you tell where my homepage (index.html) was requested? Give a frame.
+	26   192.168.177.128   45.79.89.123   HTTP   403 GET /index.html HTTP/1.1
+This frame has "GET /index.html"
+
+3. Can you tell where my photograph (jeff_square_head.jpg) was requested? Give a frame.
+	30   192.168.177.128   45.79.89.123   HTTP   372 GET /jeff_square_head.jpg HTTP/1.1
+This frame has "GET /jeff_square_head.jpg"
+
+
+====== QUESTIONS ======
+What is PSH? I found this https://stackoverflow.com/questions/13059323/how-does-tcp-psh-work
+What is the RST flag? I found this https://stackoverflow.com/questions/251243/what-causes-a-tcp-ip-reset-rst-flag-to-be-sent
+ - seems to be a 'harder' alternative to [FIN]?
