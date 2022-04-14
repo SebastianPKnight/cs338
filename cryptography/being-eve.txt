@@ -1,0 +1,49 @@
+Sebastian Knight
+
+
+========Diffie-Hellman========
+This section is associated with the code in being-eve-dh.py
+Shared secret : 36
+
+g = 11, p = 59
+Alice -> Bob (A) : 57
+Bob -> Alice (B) : 44
+Alice chose a X < 59, Bob chose a Y < 59
+Alice sends A = g^X % p to Bob, Bob sends B = g^Y % p to Alice
+So 57 = 11^X % 59
+
+Now we just need to try all possible X's
+Then we can compute the shared secret from B^X % p
+
+From running my code I got both X and the shared secret as 36.
+
+
+===D-H : why this approach doesn't work with big integers.===
+It would become almost impossible to do this method if we used larger integers because you would likely have to try many time more X's before finding the correct one, making to computational requirement very expensive.
+It becomes more than linearly harder computationally with the size of p, since you will need linearly more computations of g^X % p, and as X increases that calculation also becomes harder.
+
+
+========RSA========
+This section is associated with the code in being-eve-rsa.py
+message : Hey Bob. It's even worse than we thought! Your pal, Alice. https://www.schneier.com/blog/archives/2022/04/airtags-are-used-for-stalking-far-more-than-previously-reported.html
+
+We need to find lambda(n_bob)
+lambda(n_bob) = lcm(p_b - 1, q_b - 1)
+But since we don't know p_b or q_b, we need to try all possibilities until we get one that matches the known e_b and n_b.
+We know that p_b * q_b = n_b, and that they are both primes.
+I found that p_b and q_b = 67 and 83. I don't think there is any particular order that matters or is decernbible, but let us say that p_b = 67 and q_b = 83
+So we can find lambda(n_bob) = 2706
+Now we need d_b, which satisfies e_b * d_b % lambda(n_b) = 1
+I got a d_b of 1249, so now I can decode the message by taking each integer y and taking y^d_b % n_b to get the ASCII codes for the original message.
+
+
+===RSA : How larger integers would help.===
+Finding p and q would be much harder with larger values. Other than that I think the actual participants need to do all the same calculations.
+
+
+===RSA : Why is thes encoding insecure?===
+This encoding is insecure because it forms a substitution cipher, so with enough text letter frequency analysis and similar techniques could figure out a one-to-one dictionary for the encrypted letters to translate messages.
+
+
+Resources:
+https://docs.python.org/3/library/functions.html#chr
